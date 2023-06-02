@@ -8,7 +8,9 @@ class Account {
     private:
         string username;
         string password;
-        //Portfolio portfolio;
+        string actions[3][2] = {{"l", "Log out"}, {"r", "Reset password"}, {"o", "Open Portfolio"}};
+        int numActions = 3;
+        Portfolio portfolio;
         
 
     public:
@@ -16,6 +18,8 @@ class Account {
         void run();
         void handleInputs();
         void displayActions();
+        void openPortfolio();
+        void resetPassword();
         string getUsername();
         string getPassword();
 };

@@ -5,7 +5,7 @@ using namespace std;
 
 class Portfolio {
     private:
-        unordered_map<string, Holding> holdings;
+        //unordered_map<string, Holding> holdings;
         double totalDeposits;
         double cash;
 

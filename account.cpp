@@ -15,9 +15,14 @@ void Account::handleInputs() {
     displayActions();
     cin >> input;
 
-    while (input != "q") {
-        // Reset password
-        // Open portfolio
+    while (input != "l") {
+        if (input == "r") {
+            resetPassword();
+        } else if (input == "o") {
+            openPortfolio();
+        } else {
+            cout << input << " is not a valid input" << endl;
+        }
         
         displayActions();
         cin >> input;
@@ -25,7 +30,34 @@ void Account::handleInputs() {
 }
 
 void Account::displayActions() {
+    string message = "";
 
+    for (int i = 0; i < numActions; i++) {
+        message += "("+ actions[i][0] + ") " + actions[i][1] + ", ";
+    }
+
+    cout << message << endl;
+}
+
+void Account::openPortfolio() {
+    portfolio.run();
+}
+
+void Account::resetPassword() {
+    string newPassword, newPassword2;
+
+    cout << "Enter new password: ";
+    cin >> newPassword;
+
+    cout << "Re-enter new password: ";
+    cin >> newPassword2;
+
+    if (newPassword == newPassword2) {
+        password = newPassword;
+        cout << "Password has been updated" << endl;
+    } else {
+        cout << "Passwords did not match, password not reset" << endl;
+    }
 }
 
 string Account::getPassword() {
