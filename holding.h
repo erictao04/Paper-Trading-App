@@ -10,7 +10,7 @@ class Holding {
     public:
         Holding(string ticker);
         double sellShare(int numShares);
-        void buyShare(int numShares);
+        double buyShare(int numShares);
         double getCurrentValuation();
 
 };
