@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "account.h"
+// #include <sqlite3.h>
 
 using namespace std;
 
@@ -13,8 +14,11 @@ class App {
         int numActions = 3;
 
         void welcome() {
+//   std::cout << sqlite3_libversion() << '\n';
             cout << "Welcome to Tao's Brokerage!" << endl;
         }
+
+
 
         void goodBye() {
             cout << "Good bye!" << endl;

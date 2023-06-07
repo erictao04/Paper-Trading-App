@@ -8,9 +8,9 @@ class Portfolio {
         unordered_map<string, Holding> holdings;
         double totalDeposits;
         double cash;
-        string actions[6][2] = {{"e", "Exit"}, {"d", "Deposit"}, {"w", "Withdraw"}, {"b", "Buy stock"}, 
-                                {"s", "Sell stock"}, {"c", "Calculate profitability"}};
-        int numActions = 6;
+        string actions[7][2] = {{"e", "Exit"}, {"d", "Deposit"}, {"w", "Withdraw"}, {"b", "Buy stock"}, 
+                                {"s", "Sell stock"}, {"c", "Calculate profitability"}, {"v", "View portfolio"}};
+        int numActions = 7;
 
         Holding getHolding(string ticker);
 

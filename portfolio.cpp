@@ -37,6 +37,8 @@ void Portfolio::handleInputs() {
             sellStock();
         } else if (input == "c") {
             calculateProfitability();
+        } else if (input == "v") {
+            showPortfolio();
         } else {
             cout << input << " is not a valid input" << endl;
         }
@@ -56,7 +58,7 @@ void Portfolio::calculateProfitability() {
 
     double profit = portfolioValue - totalDeposits;
     cout << "Total profit: $" << profit << endl;
-    cout << "Total profit: %:" << profit / totalDeposits * 100 << endl;
+    cout << "Total profit: %" << profit / totalDeposits * 100 << endl;
 }
 
 Holding Portfolio::getHolding(string ticker) {
@@ -133,4 +135,15 @@ void Portfolio::deposit() {
     cash += amount;
 
     cout << "Deposited into account" << endl;
+}
+
+void Portfolio::showPortfolio() {
+    unordered_map<string, Holding>::iterator it;
+    double portfolioValue = cash;
+
+    cout << "Cash: $" << cash << endl;
+
+    for (it = holdings.begin(); it != holdings.end(); it++) {
+        cout << it->first << ": $" << it->second.getCurrentValuation() << endl;
+    }
 }
