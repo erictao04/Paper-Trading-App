@@ -98,7 +98,7 @@ void Portfolio::buyStock() {
 }
 
 void Portfolio::sellStock() {
-    // TODO add catch for negative amounts and over
+    // TODO guard against stocks that don't exist
     string ticker;
     int numShares;
 
@@ -109,11 +109,21 @@ void Portfolio::sellStock() {
     cin >> numShares;
 
     Holding* holding = getHolding(ticker);
-    double sales = holding->sellShare(numShares);
 
-    cash += sales;
+    if (numShares < 0) {
+        cout << "Can't sell negative number of shares" << endl;
+    } else if (!holding->exists()) {
+        cout << "Ticker " << ticker << " doesn't exist" << endl;
+    } else if (numShares > holding->getNumShares()) {
+        cout << "Don't own enough shares" << endl;
+    } else {
+        double sales = holding->sellShare(numShares);
+        cash += sales;
+        cout << "Sold " << numShares << " of " << ticker << endl;
+    }
 
-    cout << "Sold " << numShares << " of " << ticker << endl;
+    cout << "Updated number of shares: " << holding->getNumShares() << endl;
+    cout << "Updated valuation of shares: $" << holding->getCurrentValuation() << endl;
 }
 
 void Portfolio::withdraw() {

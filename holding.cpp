@@ -59,3 +59,12 @@ double Holding::buyShare(int num) {
 double Holding::getCurrentValuation() {
     return numShares * getSharePrice();
 }
+
+int Holding::getNumShares() {
+    return numShares;
+}
+
+bool Holding::exists() {
+    // TODO check if ticker exists
+    return true;
+}

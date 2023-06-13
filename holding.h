@@ -12,5 +12,7 @@ class Holding {
         double sellShare(int numShares);
         double buyShare(int numShares);
         double getCurrentValuation();
+        bool exists();
+        int getNumShares();
 
 };
