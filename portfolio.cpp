@@ -5,6 +5,12 @@ Portfolio::Portfolio() {
     cash = 0;
 }
 
+Portfolio::~Portfolio() {
+    cout << "destroting portfolio" << endl;
+    // TODO free memory
+}
+
+
 void Portfolio::run() {
     handleInputs();
 }
@@ -49,11 +55,10 @@ void Portfolio::handleInputs() {
 }
 
 void Portfolio::calculateProfitability() {
-    unordered_map<string, Holding>::iterator it;
     double portfolioValue = cash;
 
-    for (it = holdings.begin(); it != holdings.end(); it++) {
-        portfolioValue += it->second.getCurrentValuation();
+    for (auto holding : holdings) {
+        portfolioValue += holding.second->getCurrentValuation();
     }
 
     double profit = portfolioValue - totalDeposits;
@@ -61,11 +66,11 @@ void Portfolio::calculateProfitability() {
     cout << "Total profit: %" << profit / totalDeposits * 100 << endl;
 }
 
-Holding Portfolio::getHolding(string ticker) {
+Holding* Portfolio::getHolding(string ticker) {
     if (holdings.count(ticker) == 1) {
         return holdings.at(ticker);
     } else {
-        Holding holding(ticker);
+        Holding* holding = new Holding(ticker);
         holdings.insert({ticker, holding});
 
         return holding;
@@ -83,8 +88,8 @@ void Portfolio::buyStock() {
     cout << "Enter number of shares: ";
     cin >> numShares;
 
-    Holding holding = getHolding(ticker);
-    double cost = holding.buyShare(numShares);
+    Holding* holding = getHolding(ticker);
+    double cost = holding->buyShare(numShares);
 
     cash -= cost;
     cout << "Bought " << numShares << " of " << ticker << endl;
@@ -102,8 +107,8 @@ void Portfolio::sellStock() {
     cout << "Enter number of shares: ";
     cin >> numShares;
 
-    Holding holding = getHolding(ticker);
-    double sales = holding.sellShare(numShares);
+    Holding* holding = getHolding(ticker);
+    double sales = holding->sellShare(numShares);
 
     cash += sales;
 
@@ -138,12 +143,15 @@ void Portfolio::deposit() {
 }
 
 void Portfolio::showPortfolio() {
-    unordered_map<string, Holding>::iterator it;
     double portfolioValue = cash;
 
     cout << "Cash: $" << cash << endl;
 
-    for (it = holdings.begin(); it != holdings.end(); it++) {
-        cout << it->first << ": $" << it->second.getCurrentValuation() << endl;
+    for (auto holding : holdings) {
+        double value = holding.second->getCurrentValuation();
+        cout << holding.first << ": $" << value << endl;
+        portfolioValue += value;
     }
+
+    cout << "Total portfolio value: $" << portfolioValue << endl;
 }
