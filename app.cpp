@@ -9,7 +9,7 @@ using namespace std;
 
 class App {
     private:
-        unordered_map<string, Account> accounts;
+        unordered_map<string, Account*> accounts;
         string actions[3][2] = {{"q", "Quit"}, {"l", "Login"}, {"s", "Sign up"}};
         int numActions = 3;
 
@@ -64,10 +64,10 @@ class App {
             cout << "Enter password: ";
             cin >> password;
 
-            if (accounts.count(username) == 1 && accounts.at(username).getPassword() == password) {
+            if (accounts.count(username) == 1 && accounts.at(username)->getPassword() == password) {
                 cout << "Login successful" << endl;
                 
-                accounts.at(username).run();
+                accounts.at(username)->run();
             } else {
                 cout << "Incorrect username or password" << endl;
             }
@@ -85,19 +85,25 @@ class App {
             if (accounts.count(username) == 1) {
                 cout << "Account already exists" << endl;
             } else {
-                Account account(username, password);
+                Account* account = new Account(username, password);
 
                 accounts.insert({username, account});
                 cout << "Account created" << endl;
             }
 
         }
+        
     public:
         void run() {
             welcome();
             handleInputs();
             goodBye();
 
+        }
+
+        ~App() {
+            cout << "destroting app " << endl;
+            // TODO release memory
         }
 };
 

@@ -3,6 +3,12 @@
 Account::Account(string _username, string _password) {
     username = _username;
     password = _password;
+    portfolio = new Portfolio();
+}
+
+Account::~Account() {
+    cout << "destroting account " << username << endl;
+    // TODO release memory
 }
 
 void Account::run() {
@@ -40,7 +46,7 @@ void Account::displayActions() {
 }
 
 void Account::openPortfolio() {
-    portfolio.run();
+    portfolio->run();
 }
 
 void Account::resetPassword() {
