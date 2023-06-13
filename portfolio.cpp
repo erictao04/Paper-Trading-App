@@ -79,7 +79,6 @@ Holding* Portfolio::getHolding(string ticker) {
 }
 
 void Portfolio::buyStock() {
-    // TODO add catch for negative amounts and over
     string ticker;
     int numShares;
 
@@ -90,10 +89,21 @@ void Portfolio::buyStock() {
     cin >> numShares;
 
     Holding* holding = getHolding(ticker);
-    double cost = holding->buyShare(numShares);
 
-    cash -= cost;
-    cout << "Bought " << numShares << " of " << ticker << endl;
+    if (numShares < 0) {
+        cout << "Can't buy negative number of shares" << endl;
+    } else if (!holding->exists()) {
+        cout << "Ticker " << ticker << " doesn't exist" << endl;
+    } else if (cash < numShares * holding->getCurrentValuation()) {
+        cout << "Not enough cash" << endl;
+    } else {
+        double sales = holding->buyShare(numShares);
+        cash -= sales;
+        cout << "Bought " << numShares << " of " << ticker << endl;
+    }
+
+    cout << "Updated number of shares: " << holding->getNumShares() << endl;
+    cout << "Updated valuation of shares: $" << holding->getCurrentValuation() << endl;
 
 }
 
