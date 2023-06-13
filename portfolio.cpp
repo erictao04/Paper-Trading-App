@@ -117,17 +117,24 @@ void Portfolio::sellStock() {
 }
 
 void Portfolio::withdraw() {
-    // TODO add catch for negative amounts
     double amount;
 
     cout << "Withdraw amount: $";
     cin >> amount;
 
-    totalDeposits -= amount;
-    cash -= amount;
+    if (amount < 0) {
+        cout << "Can't withdraw negative amount" << endl;
+    }
+    else if (amount > cash) {
+        cout << "Not enough cash to withdraw" << endl;
+    } else {
+        totalDeposits -= amount;
+        cash -= amount;
 
-    cout << "Withdrew from account" << endl;
+        cout << "Withdrew $" << amount << endl;
+    }
 
+    cout << "Updated account balance: $" << cash << endl;
 }
 
 void Portfolio::deposit() {
