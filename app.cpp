@@ -1,7 +1,6 @@
 #include <iostream>
 #include <unordered_map>
 #include "account.h"
-// #include <sqlite3.h>
 
 using namespace std;
 
@@ -14,7 +13,6 @@ class App {
         int numActions = 3;
 
         void welcome() {
-//   std::cout << sqlite3_libversion() << '\n';
             cout << "Welcome to Tao's Brokerage!" << endl;
         }
 
@@ -102,14 +100,14 @@ class App {
         }
 
         ~App() {
-            cout << "destroting app " << endl;
-            // TODO release memory
+            for (auto account : accounts) {
+                delete account.second;
+            }
         }
 };
 
 int main() 
 {
     App app;
-
     app.run();
 }

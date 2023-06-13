@@ -6,8 +6,9 @@ Portfolio::Portfolio() {
 }
 
 Portfolio::~Portfolio() {
-    cout << "destroting portfolio" << endl;
-    // TODO free memory
+    for (auto holding : holdings) {
+        delete holding.second;
+    }
 }
 
 

@@ -7,8 +7,7 @@ Account::Account(string _username, string _password) {
 }
 
 Account::~Account() {
-    cout << "destroting account " << username << endl;
-    // TODO release memory
+    delete portfolio;
 }
 
 void Account::run() {
