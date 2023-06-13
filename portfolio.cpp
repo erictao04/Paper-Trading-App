@@ -138,16 +138,21 @@ void Portfolio::withdraw() {
 }
 
 void Portfolio::deposit() {
-    // TODO add catch for negative amounts
     double amount;
 
     cout << "Enter amount: $";
     cin >> amount;
 
-    totalDeposits += amount;
-    cash += amount;
+    if (amount < 0) {
+        cout << "Can't deposit negative amount" << endl;
+    } else {
+        totalDeposits += amount;
+        cash += amount;
 
-    cout << "Deposited into account" << endl;
+        cout << "Deposited $" << amount << endl;
+    }
+
+    cout << "Updated account balance: $" << cash << endl;
 }
 
 void Portfolio::showPortfolio() {
