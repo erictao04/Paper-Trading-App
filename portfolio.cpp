@@ -1,4 +1,7 @@
+#include <algorithm>
 #include "portfolio.h"
+
+using namespace std;
 
 Portfolio::Portfolio() {
     totalDeposits = 0;
@@ -84,6 +87,7 @@ void Portfolio::buyStock() {
 
     cout << "Enter ticker: ";
     cin >> ticker;
+    transform(ticker.begin(), ticker.end(), ticker.begin(), ::toupper);
 
     cout << "Enter number of shares: ";
     cin >> numShares;
@@ -114,6 +118,7 @@ void Portfolio::sellStock() {
 
     cout << "Enter ticker: ";
     cin >> ticker;
+    transform(ticker.begin(), ticker.end(), ticker.begin(), ::toupper);
 
     cout << "Enter number of shares: ";
     cin >> numShares;
