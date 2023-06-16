@@ -1,3 +1,4 @@
+#include "exception.h"
 #include "holding.h"
 #include <curl/curl.h>
 #include <json/json.h>
@@ -40,7 +41,7 @@ double Holding::getSharePrice() {
         return currentPrice;
     }
 
-    return 0; // TODO throw error
+    throw RequestException();
 }
 
 double Holding::sellShare(int num) {
@@ -55,7 +56,13 @@ double Holding::buyShare(int num) {
 }
 
 double Holding::getCurrentValuation() {
-    return numShares * getSharePrice();
+    try {
+        return numShares * getSharePrice();
+    } catch (RequestException& e) {
+        cout << e.what() << endl;
+        return 0;
+    }
+    
 }
 
 int Holding::getNumShares() {

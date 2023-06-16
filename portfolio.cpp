@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "portfolio.h"
+#include "exception.h"
 
 using namespace std;
 
@@ -81,6 +82,15 @@ Holding* Portfolio::getHolding(string ticker) {
     }
 }
 
+bool Portfolio::sufficientFunds(int numShares, Holding* holding) {
+    try {
+        return cash >= numShares * holding->getSharePrice();
+    } catch (RequestException& e) {
+        cout << e.what() << endl;
+        return false;
+    }
+}
+
 void Portfolio::buyStock() {
     string ticker;
     int numShares;
@@ -98,12 +108,16 @@ void Portfolio::buyStock() {
         cout << "Can't buy negative number of shares" << endl;
     } else if (!holding->exists()) {
         cout << "Ticker " << ticker << " doesn't exist" << endl;
-    } else if (cash < numShares * holding->getCurrentValuation()) {
-        cout << "Not enough cash" << endl;
+    } else if (!sufficientFunds(numShares, holding)) {
+        cout << "Insuffient funds" << endl;
     } else {
-        double sales = holding->buyShare(numShares);
-        cash -= sales;
-        cout << "Bought " << numShares << " of " << ticker << endl;
+        try {
+            double sales = holding->buyShare(numShares);
+            cash -= sales;
+            cout << "Bought " << numShares << " of " << ticker << endl;
+        } catch (RequestException *e) {
+            cout << e->what() << endl;
+        }
     }
 
     cout << "Updated number of shares: " << holding->getNumShares() << endl;

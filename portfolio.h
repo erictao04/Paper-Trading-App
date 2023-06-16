@@ -13,6 +13,7 @@ class Portfolio {
         int numActions = 7;
 
         Holding* getHolding(string ticker);
+        bool sufficientFunds(int numShares, Holding* holding);
 
     public:
         Portfolio();

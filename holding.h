@@ -6,13 +6,13 @@ class Holding {
     private:
         string ticker;
         int numShares;
-        double getSharePrice();
     public:
         Holding(string ticker);
         double sellShare(int numShares);
         double buyShare(int numShares);
         double getCurrentValuation();
         bool exists();
+        double getSharePrice();
         int getNumShares();
 
 };
