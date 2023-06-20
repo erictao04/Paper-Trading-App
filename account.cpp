@@ -1,10 +1,8 @@
 #include "account.h"
 
-Account::Account(string _username, string _password) {
-    username = _username;
-    password = _password;
-    portfolio = new Portfolio();
-}
+Account::Account(string u, string p):
+    username(u), password(p), portfolio(new Portfolio)
+{}
 
 Account::~Account() {
     delete portfolio;

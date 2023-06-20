@@ -4,10 +4,9 @@
 
 using namespace std;
 
-Portfolio::Portfolio() {
-    totalDeposits = 0;
-    cash = 0;
-}
+Portfolio::Portfolio(): 
+    totalDeposits(0), cash(0)
+{}
 
 Portfolio::~Portfolio() {
     for (auto holding : holdings) {
