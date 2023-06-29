@@ -8,13 +8,6 @@ Portfolio::Portfolio():
     totalDeposits(0), cash(0)
 {}
 
-Portfolio::~Portfolio() {
-    for (auto holding : holdings) {
-        delete holding.second;
-    }
-}
-
-
 void Portfolio::run() {
     handleInputs();
 }
@@ -70,18 +63,18 @@ void Portfolio::calculateProfitability() {
     cout << "Total profit: %" << profit / totalDeposits * 100 << endl;
 }
 
-Holding* Portfolio::getHolding(string ticker) {
+shared_ptr<Holding> Portfolio::getHolding(string ticker) {
     if (holdings.count(ticker) == 1) {
         return holdings.at(ticker);
     } else {
-        Holding* holding = new Holding(ticker);
+        shared_ptr<Holding> holding (new Holding(ticker));
         holdings.insert({ticker, holding});
 
         return holding;
     }
 }
 
-bool Portfolio::sufficientFunds(int numShares, Holding* holding) {
+bool Portfolio::sufficientFunds(int numShares, shared_ptr<Holding> holding) {
     try {
         return cash >= numShares * holding->getSharePrice();
     } catch (RequestException& e) {
@@ -101,7 +94,7 @@ void Portfolio::buyStock() {
     cout << "Enter number of shares: ";
     cin >> numShares;
 
-    Holding* holding = getHolding(ticker);
+    shared_ptr<Holding> holding = getHolding(ticker);
 
     if (numShares < 0) {
         cout << "Can't buy negative number of shares" << endl;
@@ -136,7 +129,7 @@ void Portfolio::sellStock() {
     cout << "Enter number of shares: ";
     cin >> numShares;
 
-    Holding* holding = getHolding(ticker);
+    shared_ptr<Holding> holding = getHolding(ticker);
 
     if (numShares < 0) {
         cout << "Can't sell negative number of shares" << endl;

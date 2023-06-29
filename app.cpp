@@ -1,15 +1,19 @@
 #include <iostream>
+#include <fstream>
 #include <unordered_map>
-#include <json/json.h>
+#include <memory>
+
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/archives/json.hpp>
+
 #include "account.h"
 
 using namespace std;
 
-// create Actions ENUM
-
 class App {
     private:
-        unordered_map<string, Account*> accounts;
+        unordered_map<string, shared_ptr<Account>> accounts;
         string actions[3][2] = {{"q", "Quit"}, {"l", "Login"}, {"s", "Sign up"}};
         int numActions = 3;
 
@@ -84,26 +88,31 @@ class App {
             if (accounts.count(username) == 1) {
                 cout << "Account already exists" << endl;
             } else {
-                Account* account = new Account(username, password);
-
-                accounts.insert({username, account});
+                accounts.insert({username, shared_ptr<Account> (new Account(username, password))});
                 cout << "Account created" << endl;
             }
 
         }
+
+        void load() {
+            std::ifstream is("data.json");
+            cereal::JSONInputArchive input(is);
+            input(accounts);
+        }
+
+        void save() {
+            std::ofstream os("data.json");
+            cereal::JSONOutputArchive output(os);
+            output(accounts);
+        }
         
     public:
         void run() {
+            load();
             welcome();
             handleInputs();
             goodBye();
-
-        }
-
-        ~App() {
-            for (auto account : accounts) {
-                delete account.second;
-            }
+            save();
         }
 };
 

@@ -1,12 +1,8 @@
 #include "account.h"
 
 Account::Account(string u, string p):
-    username(u), password(p), portfolio(new Portfolio)
+    username(u), password(p), portfolio(shared_ptr<Portfolio> (new Portfolio()))
 {}
-
-Account::~Account() {
-    delete portfolio;
-}
 
 void Account::run() {
     handleInputs();

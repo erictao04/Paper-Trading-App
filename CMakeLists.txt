@@ -13,11 +13,7 @@ include(CPack)
 find_package(CURL CONFIG REQUIRED)
 target_link_libraries(paper-trading-app PRIVATE CURL::libcurl)
 
-find_package(nlohmann_json 3.2.0 REQUIRED)
-target_link_libraries(paper-trading-app PRIVATE nlohmann_json::nlohmann_json)
-
-# find_package(unofficial-sqlite3 CONFIG REQUIRED)
-# target_link_libraries(paper-trading-app PRIVATE unofficial::sqlite3::sqlite3)
-
 find_package(jsoncpp CONFIG REQUIRED)
 target_link_libraries(paper-trading-app PRIVATE JsonCpp::JsonCpp)
+
+include_directories(package)
